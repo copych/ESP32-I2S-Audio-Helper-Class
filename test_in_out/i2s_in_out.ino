@@ -23,7 +23,9 @@ void I2S_Audio::init(eI2sMode select_mode) {
 #endif
   switch(_i2s_mode) {
     case MODE_IN:
+    #ifndef USE_V3
       port_mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX);
+    #endif
       pinMode(I2S_DIN_PIN, INPUT);
       _input_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
       if (_input_buf == NULL) {
@@ -34,7 +36,9 @@ void I2S_Audio::init(eI2sMode select_mode) {
       }      
       break;
     case MODE_IN_OUT:
+    #ifndef USE_V3
       port_mode = (i2s_mode_t)( I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX );
+    #endif
       pinMode(I2S_DOUT_PIN, OUTPUT);
       pinMode(I2S_DIN_PIN, INPUT);
       _input_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
@@ -54,7 +58,9 @@ void I2S_Audio::init(eI2sMode select_mode) {
       break;
     case MODE_OUT:
     default:
+    #ifndef USE_V3
       port_mode = (i2s_mode_t)( I2S_MODE_MASTER | I2S_MODE_TX );
+    #endif
       pinMode(I2S_DOUT_PIN, OUTPUT);
       _output_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
       if (_output_buf == NULL) {
@@ -121,9 +127,8 @@ void I2S_Audio::deInit() {
 
 void I2S_Audio::readBuffer(BUF_TYPE* buf) {
 #ifdef USE_V3
-  I2S.read((uint8_t*)buf, _buffer_size);
-  
-  _read_remain_smp = bytesRead / WHOLE_SAMPLE_BYTES;
+  I2S.readBytes((char*)buf, _buffer_size);  
+  _read_remain_smp = DMA_BUFFER_LEN;
 #else
   uint32_t bytesRead = 0;
 	int32_t err = i2s_read(_i2s_port, (void*) buf, _buffer_size, &bytesRead, portMAX_DELAY);

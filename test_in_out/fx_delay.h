@@ -44,11 +44,11 @@ class FxDelay {
 //#define MAX_DELAY 38000 // 1 second
 			delayLine_l = (float *)ps_malloc(sizeof(float) * MAX_DELAY);
 			if( delayLine_l == NULL){
-				DEBF("No more PSRAM!\n");
+				DEBF("No PSRAM for dalay FX!\n");
 			}
 			delayLine_r = (float *)ps_malloc(sizeof(float) * MAX_DELAY);
 			if( delayLine_r == NULL ){
-				DEBF("No more PSRAM!\n");
+				DEBF("No PSRAM for dalay FX!\n");
 			}
 			Reset();
 #endif

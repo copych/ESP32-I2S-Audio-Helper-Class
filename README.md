@@ -1,7 +1,7 @@
 # ESP32-I2S-Audio-Helper-Class
 
 A helper class to make I2S easy.
-Access Audio capabilities with a few lines of code like
+Access audio capabilities of ESP32 family with a few lines of code like
 
 ```
 #include "i2s_config.h"

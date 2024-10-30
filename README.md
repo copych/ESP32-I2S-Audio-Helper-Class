@@ -1,6 +1,6 @@
 # ESP32-I2S-Audio-Helper-Class
 
-A helper class to make I2S easy.
+A helper class to make I2S easy. Compatible with ESP Arduino cores 2.x.x and 3.x.x
 Access audio capabilities of ESP32 family with a few lines of code like
 
 ```

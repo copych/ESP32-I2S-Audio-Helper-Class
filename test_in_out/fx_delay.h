@@ -28,21 +28,21 @@ class FxDelay {
 		FxDelay() {}
 		void Init( void ){
     // heap_caps_print_heap_info(MALLOC_CAP_8BIT);
-      delayLine_l = (float *)heap_caps_calloc(sizeof(float) * MAX_DELAY, MALLOC_CAP);
+      delayLine_l = (float *)heap_caps_calloc(1, sizeof(float) * MAX_DELAY, MALLOC_CAP);
       if( delayLine_l == NULL){
         DEBUG("No more memory for delay L !");
       } else {
         DEBUG("Memory allocated for delay L");
       }
    // heap_caps_print_heap_info(MALLOC_CAP_8BIT);
-      delayLine_r = (float *)heap_caps_calloc(sizeof(float) * MAX_DELAY, MALLOC_CAP);
+      delayLine_r = (float *)heap_caps_calloc(1, sizeof(float) * MAX_DELAY, MALLOC_CAP);
       if( delayLine_r == NULL ){
         DEBF("No more memory for delay R !");
       } else {
         DEBUG("Memory allocated for delay R");
       }
       Reset();
-
+		}
 
 		void Reset( void ){
       float bpm = 120;

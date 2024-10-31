@@ -27,12 +27,11 @@ void I2S_Audio::init(eI2sMode select_mode) {
       port_mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX);
     #endif
       pinMode(I2S_DIN_PIN, INPUT);
-      _input_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
+      _input_buf = (BUF_TYPE*)heap_caps_calloc( 1, _buffer_size , malloc_caps );
       if (_input_buf == NULL) {
         DEBUG("I2S_Audio: Couldn't allocate memory for I2S input buffer"); 
       } else { 
         DEBF("I2S_Audio: I2S input buffer allocated %d bytes, &=%#010x\r\n", _buffer_size, _input_buf); 
-        memset(_input_buf, 0, _buffer_size);
       }      
       break;
     case MODE_IN_OUT:
@@ -41,19 +40,17 @@ void I2S_Audio::init(eI2sMode select_mode) {
     #endif
       pinMode(I2S_DOUT_PIN, OUTPUT);
       pinMode(I2S_DIN_PIN, INPUT);
-      _input_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
+      _input_buf = (BUF_TYPE*)heap_caps_calloc( 1, _buffer_size , malloc_caps );
       if (_input_buf == NULL) {
         DEBUG("I2S_Audio: Couldn't allocate memory for I2S input buffer"); 
       } else { 
         DEBF("I2S_Audio: I2S input buffer allocated %d bytes, &=%#010x\r\n", _buffer_size, _input_buf); 
-        memset(_input_buf, 0, _buffer_size);
       }
-      _output_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
+      _output_buf = (BUF_TYPE*)heap_caps_calloc( 1, _buffer_size , malloc_caps );
       if (_output_buf == NULL) {
         DEBUG("I2S_Audio: Couldn't allocate memory for I2S output buffer"); 
       } else { 
         DEBF("I2S_Audio: I2S output buffer allocated %d bytes, &=%#010x\r\n", _buffer_size, _output_buf); 
-        memset(_output_buf, 0, _buffer_size);
       }
       break;
     case MODE_OUT:
@@ -62,12 +59,11 @@ void I2S_Audio::init(eI2sMode select_mode) {
       port_mode = (i2s_mode_t)( I2S_MODE_MASTER | I2S_MODE_TX );
     #endif
       pinMode(I2S_DOUT_PIN, OUTPUT);
-      _output_buf = (BUF_TYPE*)heap_caps_malloc( _buffer_size , malloc_caps );
+      _output_buf = (BUF_TYPE*)heap_caps_calloc( 1, _buffer_size , malloc_caps );
       if (_output_buf == NULL) {
         DEBUG("Couldn't allocate memory for I2S output buffer"); 
       } else { 
         DEBF("I2S_Audio: I2S output buffer allocated %d bytes, &=%#010x\r\n", _buffer_size, _output_buf); 
-        memset(_output_buf, 0, _buffer_size);
       }
 
   }

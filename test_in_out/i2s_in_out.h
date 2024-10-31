@@ -80,7 +80,7 @@ class I2S_Audio {
     void                        writeBuffer(BUF_TYPE* buf);
     
     // functions that convert samples between normalized float and native I2S PCM data
-    inline float                convertInSample(BUF_TYPE smp)      { return smp * int_to_float; }
+    inline float                convertInSample(BUF_TYPE smp)     { return smp * int_to_float; }
     inline int32_t              convertOutSample(float smp)       { return smp * float_to_int; }
     
     // functions that read/write a single channel sample from/to custom buffers supplied via pointer argument
@@ -110,7 +110,7 @@ class I2S_Audio {
         
     
     // a few more get functions
-    inline int                  getBufSizeBytes()                 { return WHOLE_SAMPLE_BYTES; }
+    inline int                  getBufSizeBytes()                 { return _buffer_size; }
     inline int                  getBufLenSmp()                    { return _buffer_len; }
     inline int                  getChanNum()                      { return _channel_num; }
     inline int                  getReadSamplesRemain()            { return _read_remain_smp; }

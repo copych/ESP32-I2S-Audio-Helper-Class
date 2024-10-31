@@ -23,20 +23,20 @@
  */ 
 
 #ifdef BOARD_HAS_PSRAM 
-  #define REV_MULTIPLIER 1.8f
-  #define MALLOC_CAP        MALLOC_CAP_SPIRAM
+  #define REV_MULTIPLIER 1.797f
+  #define MALLOC_CAP        (MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT)
 #else
-  #define REV_MULTIPLIER 0.35f
-  #define MALLOC_CAP        MALLOC_CAP_INTERNAL
+  #define REV_MULTIPLIER 0.349f
+  #define MALLOC_CAP        (MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT)
 #endif
 
-#define COMB_BUF_LEN_0 (int)( 3604.0 * REV_MULTIPLIER)
-#define COMB_BUF_LEN_1 (int)( 3112.0 * REV_MULTIPLIER)
-#define COMB_BUF_LEN_2 (int)( 4044.0 * REV_MULTIPLIER)
-#define COMB_BUF_LEN_3 (int)( 4492.0 * REV_MULTIPLIER)
-#define ALLPASS_BUF_LEN_0 (int)( 500.0 * REV_MULTIPLIER)
-#define ALLPASS_BUF_LEN_1 (int)( 168.0 * REV_MULTIPLIER)
-#define ALLPASS_BUF_LEN_2 (int)( 48.0 * REV_MULTIPLIER)
+#define COMB_BUF_LEN_0    (int)( 3601.0f * REV_MULTIPLIER)
+#define COMB_BUF_LEN_1    (int)( 3112.0f * REV_MULTIPLIER)
+#define COMB_BUF_LEN_2    (int)( 4043.0f * REV_MULTIPLIER)
+#define COMB_BUF_LEN_3    (int)( 4492.0f * REV_MULTIPLIER)
+#define ALLPASS_BUF_LEN_0 (int)(  501.0f * REV_MULTIPLIER)
+#define ALLPASS_BUF_LEN_1 (int)(  169.0f * REV_MULTIPLIER)
+#define ALLPASS_BUF_LEN_2 (int)(   48.0f * REV_MULTIPLIER)
 
 //rev_time 0.0 <-> 1.0
 //rev_delay 0.0 <-> 1.0
@@ -69,61 +69,54 @@ class FxReverb {
   
     inline void Init() { 
 
-        combBuf0 = (float*)heap_caps_malloc( sizeof(float) * COMB_BUF_LEN_0 , MALLOC_CAP );
+        combBuf0 = (float*)heap_caps_calloc( sizeof(float) * COMB_BUF_LEN_0 , MALLOC_CAP );
         if( combBuf0 == NULL){
           DEBUG("No more RAM for reverb combBuf0!");
         } else {
           DEB("REVERB: combBuf0 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * COMB_BUF_LEN_0 , combBuf0);
-          memset(combBuf0, 0, sizeof(float) * COMB_BUF_LEN_0);
         } 
-        combBuf1 = (float*)heap_caps_malloc( sizeof(float) * COMB_BUF_LEN_1 , MALLOC_CAP );
+        combBuf1 = (float*)heap_caps_calloc( sizeof(float) * COMB_BUF_LEN_1 , MALLOC_CAP );
         if( combBuf1 == NULL){
           DEBUG("No more RAM for reverb combBuf1!");
         } else {
           DEB("REVERB: combBuf1 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * COMB_BUF_LEN_1 , combBuf1);
-          memset(combBuf1, 0, sizeof(float) * COMB_BUF_LEN_1);
         }
-        combBuf2 = (float*)heap_caps_malloc( sizeof(float) * COMB_BUF_LEN_2 , MALLOC_CAP );
+        combBuf2 = (float*)heap_caps_calloc( sizeof(float) * COMB_BUF_LEN_2 , MALLOC_CAP );
         if( combBuf2 == NULL){
           DEBUG("No more RAM for reverb combBuf2!");
         } else {
           DEB("REVERB: combBuf2 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * COMB_BUF_LEN_2 , combBuf2);
-          memset(combBuf2, 0, sizeof(float) * COMB_BUF_LEN_2);
         }
-        combBuf3 = (float*)heap_caps_malloc( sizeof(float) * COMB_BUF_LEN_3 , MALLOC_CAP );
+        combBuf3 = (float*)heap_caps_calloc( sizeof(float) * COMB_BUF_LEN_3 , MALLOC_CAP );
         if( combBuf3 == NULL){
           DEBUG("No more RAM for reverb combBuf2!");
         } else {
           DEB("REVERB: combBuf3 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * COMB_BUF_LEN_3 , combBuf3);
-          memset(combBuf3, 0, sizeof(float) * COMB_BUF_LEN_3);
         } 
-        allPassBuf0 = (float*)heap_caps_malloc( sizeof(float) * ALLPASS_BUF_LEN_0 , MALLOC_CAP );
+        allPassBuf0 = (float*)heap_caps_calloc( sizeof(float) * ALLPASS_BUF_LEN_0 , MALLOC_CAP );
         if( allPassBuf0 == NULL){
           DEBUG("No more RAM for reverb allPassBuf0!");
         } else {
           DEB("REVERB: allPassBuf0 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * ALLPASS_BUF_LEN_0 , allPassBuf0);
-          memset(allPassBuf0, 0, sizeof(float) * ALLPASS_BUF_LEN_0);
         }
-        allPassBuf1 = (float*)heap_caps_malloc( sizeof(float) * ALLPASS_BUF_LEN_1 , MALLOC_CAP );
+        allPassBuf1 = (float*)heap_caps_calloc( sizeof(float) * ALLPASS_BUF_LEN_1 , MALLOC_CAP );
         if( allPassBuf1 == NULL){
           DEBUG("No more RAM for reverb allPassBuf1!");
         } else {
           DEB("REVERB: allPassBuf1 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * ALLPASS_BUF_LEN_1, allPassBuf1);
-          memset(allPassBuf1, 0, sizeof(float) * ALLPASS_BUF_LEN_1);
         }
-        allPassBuf2 = (float*)heap_caps_malloc( sizeof(float) * ALLPASS_BUF_LEN_2 , MALLOC_CAP );
+        allPassBuf2 = (float*)heap_caps_calloc( sizeof(float) * ALLPASS_BUF_LEN_2 , MALLOC_CAP );
         if( allPassBuf2 == NULL){
           DEBUG("No more RAM for reverb allPassBuf2!");
         } else {
           DEB("REVERB: allPassBuf2 : ");
           DEBF("%d Bytes RAM allocated for reverb buffer, &=%#010x\r\n", sizeof(float) * ALLPASS_BUF_LEN_2, allPassBuf2);
-          memset(allPassBuf2, 0, sizeof(float) * ALLPASS_BUF_LEN_2);
         }
         
       SetLevel( 1.0f );

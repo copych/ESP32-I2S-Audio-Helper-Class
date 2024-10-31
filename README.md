@@ -10,6 +10,8 @@ Access audio capabilities of ESP32 family with a few lines of code like
 #include "i2s_in_out.h"
 
 I2S_Audio AudioPort;
+float sampleL = 0.0f;
+float sampleR = 0.0f;
 
 void setup() {
   AudioPort.init(I2S_Audio::MODE_IN_OUT);
